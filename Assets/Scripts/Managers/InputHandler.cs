@@ -8,7 +8,8 @@ namespace Managers
     {
 
         private int _pointerCount = 0;
-        private bool _didTapToPlay;
+        private bool _didTapToPlay = false;
+        private float _currentDrag = 0f;
 
         private void Awake()
         {
@@ -49,6 +50,14 @@ namespace Managers
         
         private void OnDragDelta(Vector2 delta)
         {
+            _currentDrag += delta.x;
+        }
+
+        public float GetCurrentDrag()
+        {
+            var returnDrag = _currentDrag;
+            _currentDrag = 0f;
+            return returnDrag;
         }
 
         private void OnLevelReset()
