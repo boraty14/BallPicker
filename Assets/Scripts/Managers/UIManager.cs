@@ -35,8 +35,9 @@ namespace Managers
 			EventBus.OnLevelReset -= OnLevelReset;
 		}
 
-		private void OnTapToPlay()
+		public void PressedTapToPlay()
 		{
+			HidePanel(PanelType.TapToPlay);
 		}
 
 		private void OnLevelReset()

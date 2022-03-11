@@ -9,8 +9,8 @@ namespace Managers
     public class LevelManager : MonoBehaviourSingleton<LevelManager>
     {
         [SerializeField] private List<GameObject> levels = new List<GameObject>();
-        private List<GameObject> shuffledLevels = new List<GameObject>();
-        private GameObject currentLevel;
+        private List<GameObject> _shuffledLevels = new List<GameObject>();
+        private GameObject _currentLevel;
 
         public const string PrefsLevelKey = "Level";
 
@@ -44,25 +44,25 @@ namespace Managers
         private void Start()
         {
             CreateLevelList();
-            currentLevel = null;
+            _currentLevel = null;
             StartCoroutine(nameof(LevelChangeRoutine));
         }
 
         private void CreateLevelList()
         {
-            shuffledLevels = new List<GameObject>(levels);
+            _shuffledLevels = new List<GameObject>(levels);
 
             int level = PlayerPrefs.GetInt(PrefsLevelKey);
-            if (level >= shuffledLevels.Count)
+            if (level >= _shuffledLevels.Count)
             {
-                shuffledLevels.RemoveAt(0);
-                shuffledLevels.ShuffleList();
+                _shuffledLevels.RemoveAt(0);
+                _shuffledLevels.ShuffleList();
             }
             else
             {
                 for (int i = 0; i < level; i++)
                 {
-                    shuffledLevels.RemoveAt(0);
+                    _shuffledLevels.RemoveAt(0);
                 }
             }
         }
@@ -72,8 +72,8 @@ namespace Managers
             int level = PlayerPrefs.GetInt(PrefsLevelKey) + 1;
             PlayerPrefs.SetInt(PrefsLevelKey, level);
 
-            shuffledLevels.RemoveAt(0);
-            if (shuffledLevels.Count <= 0)
+            _shuffledLevels.RemoveAt(0);
+            if (_shuffledLevels.Count <= 0)
             {
                 CreateLevelList();
             }
@@ -89,12 +89,12 @@ namespace Managers
 
         private IEnumerator LevelChangeRoutine()
         {
-            if (currentLevel != null)
+            if (_currentLevel != null)
             {
-                Destroy(currentLevel.gameObject);
+                Destroy(_currentLevel.gameObject);
             }
             
-            currentLevel = Instantiate(shuffledLevels[0]);
+            _currentLevel = Instantiate(_shuffledLevels[0]);
             UIManager.Instance.HidePanel(PanelType.All);
             OnLevelReset();
             EventBus.OnLevelReset?.Invoke();

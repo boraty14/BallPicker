@@ -8,6 +8,7 @@ namespace Managers
     {
 
         private int _pointerCount = 0;
+        private bool _didTapToPlay;
 
         private void Awake()
         {
@@ -19,6 +20,7 @@ namespace Managers
             EventBus.OnLevelWin += OnLevelWin;
             EventBus.OnLevelLose += OnLevelLose;
             EventBus.OnLevelReset += OnLevelReset;
+            AddListeners();
         }
 
         private void OnDisable()
@@ -26,12 +28,18 @@ namespace Managers
             EventBus.OnLevelWin -= OnLevelWin;
             EventBus.OnLevelLose -= OnLevelLose;
             EventBus.OnLevelReset -= OnLevelReset;
+            
         }
         
         private void OnPointerDown()
         {
             _pointerCount++;
             if(_pointerCount > 1) return;
+            if (!_didTapToPlay)
+            {
+                UIManager.Instance.PressedTapToPlay();
+                _didTapToPlay = true;
+            }
         }
         private void OnPointerUp()
         {
@@ -46,6 +54,7 @@ namespace Managers
         private void OnLevelReset()
         {
             AddListeners();
+            _didTapToPlay = false;
         }
 
         private void OnLevelWin()
