@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using Core;
 using DG.Tweening;
+using Level;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
-namespace Managers
+namespace UI
 {
     public class UIManager : MonoBehaviourSingleton<UIManager>
     {

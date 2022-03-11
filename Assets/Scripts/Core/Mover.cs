@@ -1,6 +1,6 @@
 using System;
+using GameSettings;
 using Managers;
-using SO;
 using UnityEngine;
 
 namespace Core
@@ -9,15 +9,19 @@ namespace Core
     {
         [SerializeField] private SPlayerSettings playerSettings;
         private Rigidbody _rb;
+        private bool _isMoving = false;
+
+        public Action<Vector3> OnPlayerMove;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
-            //_rb.AddForce(Vector3.one,ForceMode.VelocityChange);
+            _isMoving = true;
         }
 
         private void FixedUpdate()
         {
+            if (!_isMoving) return;
             var fixedDeltaTime = Time.fixedDeltaTime;
             var verticalMovement = Vector3.forward * playerSettings.verticalSpeed * fixedDeltaTime;
             var horizontalMovement = GetClampedDrag(fixedDeltaTime);
@@ -31,10 +35,16 @@ namespace Core
             var currentPosition = _rb.position;
             if (Mathf.Abs(currentPosition.x + drag * fixedDeltaTime) > playerSettings.horizontalLimit)
             {
-                return Vector3.zero;
+                return Mathf.Sign(currentPosition.x) *
+                       (playerSettings.horizontalLimit - 0.01f - Mathf.Abs(currentPosition.x)) * Vector3.right;
             }
-            return drag * fixedDeltaTime * Vector3.right;
-            //var horizontalVelocity = Vector3.right * playerSettings.horizontalSpeed * drag;
+            return drag * fixedDeltaTime * Vector3.right * playerSettings.horizontalSpeed;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other.CompareTag("LevelEndTrigger")) return;
+            _isMoving = false;
         }
 
         private void OnEnable()
