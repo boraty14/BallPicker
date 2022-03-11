@@ -13,14 +13,6 @@ MonoBehaviour:
   m_Name: LevelManagerSettings
   m_EditorClassIdentifier: 
   levels:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  destroyPreviousLevelDuration: 0
+  - {fileID: 11400000, guid: 679eadc771126f14896b8eec3846b282, type: 2}
+  - {fileID: 11400000, guid: 679eadc771126f14896b8eec3846b282, type: 2}
+  destroyPreviousLevelDuration: 2

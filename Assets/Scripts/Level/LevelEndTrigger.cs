@@ -1,25 +1,17 @@
 using System.Collections;
-using GameElements;
-using GameSettings;
+using Core;
 using UnityEngine;
 
 namespace Level
 {
     public class LevelEndTrigger : MonoBehaviour
     {
-        [SerializeField] private SLevelSettings levelSettings;
-        [SerializeField] private MovingPlatform movingPlatform;
-        
+        private bool _isTriggered = false;
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.CompareTag("Player")) return;
-            StartCoroutine(CalculateLevelEnd());
-        }
-
-        private IEnumerator CalculateLevelEnd()
-        {
-            yield return new WaitForSeconds(levelSettings.endWaitDuration);
-            movingPlatform.CheckLevelEndStatus();
+            if (!other.CompareTag("Player") || _isTriggered) return;
+            _isTriggered = true;
+            EventBus.OnLevelEndTrigger?.Invoke();
         }
     }
 }

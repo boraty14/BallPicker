@@ -19,27 +19,24 @@ namespace Managers
 
         private void OnEnable()
         {
-            EventBus.OnLevelWin += OnLevelWin;
-            EventBus.OnLevelLose += OnLevelLose;
             EventBus.OnLevelReset += OnLevelReset;
-            AddListeners();
+            EventBus.OnLevelEndTrigger += OnLevelEndTrigger;
         }
 
         private void OnDisable()
         {
-            EventBus.OnLevelWin -= OnLevelWin;
-            EventBus.OnLevelLose -= OnLevelLose;
             EventBus.OnLevelReset -= OnLevelReset;
+            EventBus.OnLevelEndTrigger -= OnLevelEndTrigger;
             
         }
-        
+
         private void OnPointerDown()
         {
             _pointerCount++;
             if(_pointerCount > 1) return;
             if (!_didTapToPlay)
             {
-                UIManager.Instance.PressedTapToPlay();
+                EventBus.OnTapToPlay?.Invoke();
                 _didTapToPlay = true;
             }
         }
@@ -66,26 +63,20 @@ namespace Managers
             AddListeners();
             _didTapToPlay = false;
         }
-
-        private void OnLevelWin()
+        
+        private void OnLevelEndTrigger()
         {
             RemoveListeners();
         }
         
-        private void OnLevelLose()
-        {
-            RemoveListeners();
-        }
-        
-
-        public void AddListeners()
+        private void AddListeners()
         {
             InputPanel.Instance.OnPointerDownEvent.AddListener(OnPointerDown);
             InputPanel.Instance.OnPointerUpEvent.AddListener(OnPointerUp);
             InputPanel.Instance.OnDragDelta.AddListener(OnDragDelta);
         }
 
-        public void RemoveListeners()
+        private void RemoveListeners()
         {
             InputPanel.Instance.OnPointerDownEvent.RemoveAllListeners();
         }

@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Core;
-using DG.Tweening;
 using Level;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Utils;
 
 namespace UI
 {
     public class UIManager : MonoBehaviourSingleton<UIManager>
     {
-        [SerializeField] private Image fadeImage = null;
-        [SerializeField] private List<Panel> panels = new List<Panel>();
+	    [SerializeField] private List<Panel> panels = new List<Panel>();
 
         [Space, Header("Level Texts")]
 		[SerializeField] private TextMeshProUGUI winLevelText = null;
@@ -27,6 +24,7 @@ namespace UI
 			EventBus.OnLevelWin += OnLevelWin;
 			EventBus.OnLevelLose += OnLevelLose;
 			EventBus.OnLevelReset += OnLevelReset;
+			EventBus.OnTapToPlay += OnTapToPlay;
 		}
 
 		private void OnDisable()
@@ -34,17 +32,19 @@ namespace UI
 			EventBus.OnLevelWin -= OnLevelWin;
 			EventBus.OnLevelLose -= OnLevelLose;
 			EventBus.OnLevelReset -= OnLevelReset;
+			EventBus.OnTapToPlay -= OnTapToPlay;
 		}
 
-		public void PressedTapToPlay()
+		private void OnTapToPlay()
 		{
-			HidePanel(PanelType.TapToPlay);
+			ShowPanel(PanelType.Gameplay);
 		}
 
 		private void OnLevelReset()
 		{
+			HidePanel(PanelType.All);
 			UpdateLevelTexts();
-			ShowPanel(PanelType.Gameplay);
+			ShowPanel(PanelType.TapToPlay);
 		}
 
 		private void OnLevelWin()
@@ -57,18 +57,9 @@ namespace UI
 		{
 			UpdateLevelTexts();
 			ShowPanel(PanelType.Lose);
-		} 
-
-
-		public YieldInstruction Fade(FadeType fadeType, float duration = 0.5f, Ease ease = Ease.InOutSine)
-		{
-			fadeImage.gameObject.SetActive(true);
-			fadeImage.raycastTarget = true;
-			return fadeImage.DOFade(fadeType == FadeType.In ? 1.0f : 0.0f, duration)
-				.SetEase(ease).OnComplete(() => fadeImage.raycastTarget = false).WaitForCompletion();
 		}
 
-		public void ShowPanel(PanelType panelType, bool hideOthers = true)
+		private void ShowPanel(PanelType panelType, bool hideOthers = true)
 		{
 			panels.ForEach(p =>
 			{
@@ -80,7 +71,7 @@ namespace UI
 		}
 		
 
-		public void HidePanel(PanelType panelType)
+		private void HidePanel(PanelType panelType)
 		{
 			panels.ForEach(p =>
 			{

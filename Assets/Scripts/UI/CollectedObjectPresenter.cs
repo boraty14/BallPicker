@@ -18,13 +18,7 @@ namespace UI
             _objectCountText = GetComponent<TextMeshProUGUI>();
         }
 
-        //TODO remove after level loop
-        private void Start()
-        {
-            UpdateText(0);
-        }
-
-
+        
         private void OnEnable()
         {
             EventBus.OnLevelReset += OnLevelReset;
@@ -39,7 +33,7 @@ namespace UI
 
         private void OnLevelReset()
         {
-            //_levelNeededObjectCount = LevelManager.Instance.CurrentLevelNeededObject;
+            _levelNeededObjectCount = LevelManager.Instance.CurrentLevelNeededObject;
             UpdateText(0);
         }
 
@@ -50,8 +44,7 @@ namespace UI
 
         private void UpdateText(int collectedObjectCount)
         {
-            //_objectCountText.text = $"{collectedObjectCount} / {_levelNeededObjectCount}";
-            _objectCountText.text = $"{collectedObjectCount} / 20";
+            _objectCountText.text = $"{collectedObjectCount} / {_levelNeededObjectCount}";
 
         }
     }

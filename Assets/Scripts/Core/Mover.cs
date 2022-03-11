@@ -16,7 +16,6 @@ namespace Core
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
-            _isMoving = true;
         }
 
         private void FixedUpdate()
@@ -41,42 +40,27 @@ namespace Core
             return drag * fixedDeltaTime * Vector3.right * playerSettings.horizontalSpeed;
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (!other.CompareTag("LevelEndTrigger")) return;
-            _isMoving = false;
-        }
-
         private void OnEnable()
         {
-            EventBus.OnLevelWin += OnLevelWin;
-            EventBus.OnLevelLose += OnLevelLose;
-            EventBus.OnLevelReset += OnLevelReset;
             EventBus.OnTapToPlay += OnTapToPlay;
+            EventBus.OnLevelEndTrigger += OnLevelEndTrigger;
         }
 
         private void OnDisable()
         {
-            EventBus.OnLevelWin -= OnLevelWin;
-            EventBus.OnLevelLose -= OnLevelLose;
-            EventBus.OnLevelReset -= OnLevelReset;
-            EventBus.OnTapToPlay += OnTapToPlay;
+            EventBus.OnTapToPlay -= OnTapToPlay;
+            EventBus.OnLevelEndTrigger -= OnLevelEndTrigger;
+        }
+
+        private void OnLevelEndTrigger()
+        {
+            Debug.Log("dur");
+            _isMoving = false;
         }
 
         private void OnTapToPlay()
         {
-        }
-
-        private void OnLevelReset()
-        {
-        }
-
-        private void OnLevelWin()
-        {
-        }
-
-        private void OnLevelLose()
-        {
+            _isMoving = true;
         }
     }
 }

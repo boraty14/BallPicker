@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Core;
 using DG.Tweening;
 using GameSettings;
@@ -15,10 +16,32 @@ namespace GameElements
 
         public Action<int> OnCollectedObjectIncrease;
 
-        public void CheckLevelEndStatus()
+        private void OnEnable()
         {
+            EventBus.OnLevelEndTrigger += OnLevelEndTrigger;
+        }
+
+        private void OnDisable()
+        {
+            EventBus.OnLevelEndTrigger -= OnLevelEndTrigger;
+        }
+
+        private void OnLevelEndTrigger()
+        {
+            StartCoroutine(CheckLevelEndStatus());
+        }
+
+        private void Start()
+        {
+            transform.position -= platformSettings.moveHeight * Vector3.up;
+        }
+
+        private IEnumerator CheckLevelEndStatus()
+        {
+            yield return new WaitForSeconds(LevelManager.Instance.CurrentLevelEndWaitDuration);
             if (_hitCollectableCount >= LevelManager.Instance.CurrentLevelNeededObject)
             {
+                Debug.Log("win");
                 EventBus.OnLevelWin?.Invoke();
             }
             else

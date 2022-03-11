@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Core;
 using GameSettings;
-using Managers;
-using UI;
 using UnityEngine;
 using Utils;
 
@@ -20,33 +18,9 @@ namespace Level
 
         public int CurrentLevelNeededObject => _shuffledLevels[0].neededObjectCount;
 
-        private void OnEnable()
-        {
-            EventBus.OnLevelWin += OnLevelWin;
-            EventBus.OnLevelLose += OnLevelLose;
-        }
+        public float CurrentLevelEndWaitDuration => _shuffledLevels[0].endWaitDuration;
 
-        private void OnDisable()
-        {
-            EventBus.OnLevelWin -= OnLevelWin;
-            EventBus.OnLevelLose -= OnLevelLose;
-        }
-
-
-        private void OnLevelWin()
-        {
-        }
-
-        private void OnLevelLose()
-        {
-        }
-
-        private void DestroyPreviousLevel()
-        {
-            if (_previousLevelPrefab != null)
-                Destroy(_previousLevelPrefab, levelManagerSettings.destroyPreviousLevelDuration);
-        }
-
+        
         private void Start()
         {
             CreateLevelList();
@@ -95,16 +69,17 @@ namespace Level
 
         private IEnumerator LevelChangeRoutine()
         {
-            // if (_currentLevelPrefab != null)
-            // {
-            //     Destroy(_currentLevelPrefab.gameObject);
-            // }
             _previousLevelPrefab = _currentLevelPrefab;
             DestroyPreviousLevel();
             _currentLevelPrefab = Instantiate(_shuffledLevels[0].levelPrefab);
-            UIManager.Instance.HidePanel(PanelType.All);
             EventBus.OnLevelReset?.Invoke();
             yield break;
+        }
+        
+        private void DestroyPreviousLevel()
+        {
+            if (_previousLevelPrefab != null)
+                Destroy(_previousLevelPrefab, levelManagerSettings.destroyPreviousLevelDuration);
         }
     }
 }
