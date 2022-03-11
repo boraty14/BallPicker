@@ -100,13 +100,7 @@ namespace UI
 		}
     }
 
-	public enum FadeType
-	{
-		In,
-		Out
-	}
-
-	[Serializable]
+    [Serializable]
 	public class Panel
 	{
 		public GameObject panelObject;
@@ -124,6 +118,5 @@ namespace UI
 		Gameplay,
 		Win,
 		Lose,
-		Tutorial,
 	}
 }

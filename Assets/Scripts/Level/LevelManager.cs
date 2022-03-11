@@ -20,6 +20,8 @@ namespace Level
 
         public float CurrentLevelEndWaitDuration => _shuffledLevels[0].endWaitDuration;
 
+        public float CurrentLevelEndPoint => _currentLevelPrefab.GetComponentInChildren<LevelEndTrigger>().transform.position.z;
+
         
         private void Start()
         {

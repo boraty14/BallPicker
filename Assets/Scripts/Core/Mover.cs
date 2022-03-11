@@ -11,7 +11,7 @@ namespace Core
         private Rigidbody _rb;
         private bool _isMoving = false;
 
-        public Action<Vector3> OnPlayerMove;
+        public Action<float> OnPlayerMove;
 
         private void Awake()
         {
@@ -26,6 +26,7 @@ namespace Core
             var horizontalMovement = GetClampedDrag(fixedDeltaTime);
             var moveVector = verticalMovement + horizontalMovement;
             _rb.MovePosition(_rb.position + moveVector);
+            OnPlayerMove?.Invoke(_rb.position.z);
         }
 
         private Vector3 GetClampedDrag(float fixedDeltaTime)

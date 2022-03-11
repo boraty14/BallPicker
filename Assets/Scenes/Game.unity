@@ -954,6 +954,7 @@ GameObject:
   - component: {fileID: 924738353}
   - component: {fileID: 924738352}
   - component: {fileID: 924738351}
+  - component: {fileID: 924738354}
   m_Layer: 5
   m_Name: RetryButton
   m_TagString: Untagged
@@ -1025,9 +1026,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Project.Scripts.Managers.LevelManager, Assembly-CSharp
-        m_MethodName: ReplayLevel
+      - m_Target: {fileID: 924738354}
+        m_TargetAssemblyTypeName: UI.RetryButton, Assembly-CSharp
+        m_MethodName: PressRetry
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1075,6 +1076,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924738349}
   m_CullTransparentMesh: 0
+--- !u!114 &924738354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924738349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1de14de448a9744852b645d6accdb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &927676627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,6 +1100,7 @@ GameObject:
   - component: {fileID: 927676631}
   - component: {fileID: 927676630}
   - component: {fileID: 927676629}
+  - component: {fileID: 927676632}
   m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
@@ -1158,9 +1172,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Project.Scripts.Managers.LevelManager, Assembly-CSharp
-        m_MethodName: NextLevel
+      - m_Target: {fileID: 927676632}
+        m_TargetAssemblyTypeName: UI.NextButton, Assembly-CSharp
+        m_MethodName: PressNext
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1208,6 +1222,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927676627}
   m_CullTransparentMesh: 0
+--- !u!114 &927676632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927676627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25939ffd057167c44bdbe8a6016d905d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2483,6 +2509,7 @@ GameObject:
   - component: {fileID: 1657201588}
   - component: {fileID: 1657201590}
   - component: {fileID: 1657201589}
+  - component: {fileID: 1657201591}
   m_Layer: 0
   m_Name: ProgressBar
   m_TagString: Untagged
@@ -2547,6 +2574,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657201587}
   m_CullTransparentMesh: 1
+--- !u!114 &1657201591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657201587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62efc77bd53d9364ca999447d217ad0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1675289961
 GameObject:
   m_ObjectHideFlags: 0
