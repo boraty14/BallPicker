@@ -1,7 +1,7 @@
 You can set all game settings from "GameSettings" folder
 via ScriptableObjects. All settings are gathered in one
-place so designers can change and modify them easily and
-don't have to deep dive into project folders each time
+place so designers can modify them easily and don't
+have to deep dive into project folders each time
 they want to change something.
 
 For example some basic settings:

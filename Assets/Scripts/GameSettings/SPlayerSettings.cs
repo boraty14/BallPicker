@@ -8,5 +8,6 @@ namespace GameSettings
         public float verticalSpeed;
         public float horizontalSpeed;
         public float horizontalLimit;
+        public float dragLimit;
     }
 }

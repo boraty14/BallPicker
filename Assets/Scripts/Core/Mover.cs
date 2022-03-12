@@ -33,12 +33,14 @@ namespace Core
         private Vector3 GetClampedDrag(float fixedDeltaTime)
         {
             var drag = InputHandler.Instance.GetCurrentDrag();
+            drag = Mathf.Clamp(drag, -playerSettings.dragLimit, playerSettings.dragLimit);
+            Debug.Log(drag);
             var currentPosition = _rb.position;
             if (Mathf.Abs(currentPosition.x + drag * fixedDeltaTime) > playerSettings.horizontalLimit)
             {
-                return Mathf.Sign(currentPosition.x) *
-                       (playerSettings.horizontalLimit - 0.01f - Mathf.Abs(currentPosition.x)) * Vector3.right;
+                return Mathf.Sign(drag) * (playerSettings.horizontalLimit - 0.01f - Mathf.Abs(currentPosition.x)) * Vector3.right;
             }
+
             return drag * fixedDeltaTime * Vector3.right * playerSettings.horizontalSpeed;
         }
 
