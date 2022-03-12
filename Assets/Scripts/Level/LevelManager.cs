@@ -18,6 +18,8 @@ namespace Level
         private GameObject _previousLevelPrefab;
         private GameObject _currentLevelPrefab;
         private Color _previousGroundColor = Color.white;
+        
+        public bool DidLevelFail { get; private set; }
 
         public const string PrefsLevelKey = "Level";
 
@@ -31,16 +33,24 @@ namespace Level
         private void OnEnable()
         {
             EventBus.OnTapToPlay += OnTapToPlay;
+            EventBus.OnLevelEndTrigger += OnLevelEndTrigger;
         }
 
         private void OnDisable()
         {
             EventBus.OnTapToPlay -= OnTapToPlay;
+            EventBus.OnLevelEndTrigger -= OnLevelEndTrigger;
         }
+        
 
         private void OnTapToPlay()
         {
             DestroyPreviousLevel();
+        }
+        
+        private void OnLevelEndTrigger()
+        {
+            _previousLevelPrefab = _currentLevelPrefab;
         }
 
 
@@ -87,23 +97,28 @@ namespace Level
 
         public void ReplayLevel()
         {
+            DidLevelFail = true;
+            Destroy(_previousLevelPrefab);
             StartCoroutine(nameof(LevelChangeRoutine));
         }
 
         private IEnumerator LevelChangeRoutine()
         {
-            _previousLevelPrefab = _currentLevelPrefab;
             var levelOffset = GetLevelInstantiateOffset();
             _currentLevelPrefab = Instantiate(_shuffledLevels[0].levelPrefab,
                 Vector3.zero + levelOffset * Vector3.forward, Quaternion.identity);
             SetRandomGroundColor();
             EventBus.OnLevelReset?.Invoke();
+            DidLevelFail = false;
             yield break;
         }
 
         private float GetLevelInstantiateOffset()
         {
-            if (_previousLevelPrefab == null) return 0f;
+            if (_previousLevelPrefab == null || DidLevelFail)
+            {
+                return 0f;
+            }
             var movingPlatformParent = _previousLevelPrefab.GetComponentInChildren<MovingPlatform>().transform.parent;
             return movingPlatformParent.position.z + movingPlatformParent.localScale.z;
         }
@@ -111,13 +126,22 @@ namespace Level
         private void SetRandomGroundColor()
         {
             Color randomGroundColor;
-            while (true)
+            if (!DidLevelFail)
             {
-                randomGroundColor = levelManagerSettings.colors[Random.Range(0, levelManagerSettings.colors.Count)];
-                if (randomGroundColor != _previousGroundColor) break;
+                while (true)
+                {
+                    randomGroundColor = levelManagerSettings.colors[Random.Range(0, levelManagerSettings.colors.Count)];
+                    if (randomGroundColor != _previousGroundColor) break;
+                }
+                _previousGroundColor = randomGroundColor;
             }
+            else
+            {
+                randomGroundColor = _previousGroundColor;
+            }
+            
             _currentLevelPrefab.GetComponentInChildren<Ground>().SetRandomColor(randomGroundColor);
-            _previousGroundColor = randomGroundColor;
+            
         }
 
         private void DestroyPreviousLevel()

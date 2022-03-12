@@ -1,5 +1,6 @@
 using System;
 using GameSettings;
+using Level;
 using Managers;
 using UnityEngine;
 
@@ -43,19 +44,28 @@ namespace Core
 
         private void OnEnable()
         {
+            EventBus.OnLevelReset += OnLevelReset;
             EventBus.OnTapToPlay += OnTapToPlay;
             EventBus.OnLevelEndTrigger += OnLevelEndTrigger;
         }
 
         private void OnDisable()
         {
+            EventBus.OnLevelReset -= OnLevelReset;
             EventBus.OnTapToPlay -= OnTapToPlay;
             EventBus.OnLevelEndTrigger -= OnLevelEndTrigger;
         }
 
+        private void OnLevelReset()
+        {
+            if (LevelManager.Instance.DidLevelFail)
+            {
+                transform.position = Vector3.zero;
+            }
+        }
+
         private void OnLevelEndTrigger()
         {
-            Debug.Log("dur");
             _isMoving = false;
         }
 
