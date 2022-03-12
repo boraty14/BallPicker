@@ -34,7 +34,6 @@ namespace Core
         {
             var drag = InputHandler.Instance.GetCurrentDrag();
             drag = Mathf.Clamp(drag, -playerSettings.dragLimit, playerSettings.dragLimit);
-            Debug.Log(drag);
             var currentPosition = _rb.position;
             if (Mathf.Abs(currentPosition.x + drag * fixedDeltaTime) > playerSettings.horizontalLimit)
             {

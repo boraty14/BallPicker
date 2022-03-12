@@ -113,7 +113,7 @@ namespace Level
             yield break;
         }
 
-        private float GetLevelInstantiateOffset()
+        public float GetLevelInstantiateOffset()
         {
             if (_previousLevelPrefab == null || DidLevelFail)
             {

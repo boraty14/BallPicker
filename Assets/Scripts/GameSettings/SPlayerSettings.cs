@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace GameSettings
@@ -5,9 +6,9 @@ namespace GameSettings
     [CreateAssetMenu(menuName = "Game Settings/Create Player Settings")]
     public class SPlayerSettings : ScriptableObject
     {
-        public float verticalSpeed;
-        public float horizontalSpeed;
-        public float horizontalLimit;
-        public float dragLimit;
+        [PropertyTooltip("Player vertical speed")]public float verticalSpeed;
+        [PropertyTooltip("Player horizontal speed")]public float horizontalSpeed;
+        [PropertyTooltip("Horizontal limits where player can go")]public float horizontalLimit;
+        [PropertyTooltip("Maximum drag in a fixed update")]public float dragLimit;
     }
 }

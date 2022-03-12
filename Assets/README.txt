@@ -33,6 +33,12 @@ scriptable object inside of "GameSettings" folder.
 
 Those primary settings and the other relative settings 
 can be modified from "GameSettings" folder.
+To reset progress you can clear Playerprefs.
+
+Used Plugins:
+DOTween: for setting platform move ease/duration and destroy scale ease/duration
+Odin Inspector: For better inspector experience and tooltip utility
+TextMeshPro: For UI texts and fonts.
 
 Author: Bora Ataysen
 

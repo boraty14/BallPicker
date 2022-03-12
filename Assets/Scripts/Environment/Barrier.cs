@@ -1,14 +1,15 @@
 using Core;
+using Level;
 using UnityEngine;
 
 namespace Environment
 {
     public class Barrier : MonoBehaviour
     {
-        private Transform _playerTransform;
+        //private Transform _playerTransform;
         private void OnEnable()
         {
-            _playerTransform = FindObjectOfType<Mover>().transform;
+            //_playerTransform = FindObjectOfType<Mover>().transform;
             EventBus.OnLevelReset += OnLevelReset;
         }
 
@@ -20,7 +21,7 @@ namespace Environment
         private void OnLevelReset()
         {
             var currentPosition = transform.position;
-            currentPosition.z = _playerTransform.position.z;
+            currentPosition.z = LevelManager.Instance.GetLevelInstantiateOffset();
             transform.position = currentPosition;
         }
     }

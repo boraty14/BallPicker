@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace GameSettings
@@ -7,7 +8,7 @@ namespace GameSettings
     public class SLevelManagerSettings : ScriptableObject
     {
         public List<SLevelSettings> levels = new List<SLevelSettings>();
-        public List<Color> colors = new List<Color>();
+        [PropertyTooltip("Random ground colors")]public List<Color> colors = new List<Color>();
         public float destroyPreviousLevelDuration;
     }
 }

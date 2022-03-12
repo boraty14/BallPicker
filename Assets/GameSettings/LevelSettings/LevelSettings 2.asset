@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5f9c648b5ad6241a397edbd57ba6c0, type: 3}
   m_Name: LevelSettings 2
   m_EditorClassIdentifier: 
-  neededObjectCount: 20
+  neededObjectCount: 10
   endWaitDuration: 2.5
-  levelPrefab: {fileID: 0}
+  levelPrefab: {fileID: 5790556389535442804, guid: 18f1dc1e32b0de649b9253282b75d57b, type: 3}
