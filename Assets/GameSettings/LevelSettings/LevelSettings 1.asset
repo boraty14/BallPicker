@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neededObjectCount: 5
   endWaitDuration: 2.5
-  levelPrefab: {fileID: 5551670039616499477, guid: 581363e1ac7125049baf91fb62f94455, type: 3}
+  levelPrefab: {fileID: 5790556389535442804, guid: 581363e1ac7125049baf91fb62f94455, type: 3}

@@ -22,12 +22,14 @@ namespace UI
         private void OnEnable()
         {
             EventBus.OnLevelReset += OnLevelReset;
+            EventBus.OnLevelWin += OnLevelWin;
             movingPlatform.OnCollectedObjectIncrease += OnCollectedObjectIncrease;
         }
         
         private void OnDisable()
         {
             EventBus.OnLevelReset -= OnLevelReset;
+            EventBus.OnLevelWin -= OnLevelWin;
             movingPlatform.OnCollectedObjectIncrease -= OnCollectedObjectIncrease;
         }
 
@@ -35,6 +37,11 @@ namespace UI
         {
             _levelNeededObjectCount = LevelManager.Instance.CurrentLevelNeededObject;
             UpdateText(0);
+        }
+        
+        private void OnLevelWin()
+        {
+            _objectCountText.gameObject.SetActive(false);
         }
 
         private void OnCollectedObjectIncrease(int collectedObjectCount)
@@ -44,7 +51,7 @@ namespace UI
 
         private void UpdateText(int collectedObjectCount)
         {
-            _objectCountText.text = $"{collectedObjectCount} / {_levelNeededObjectCount}";
+            _objectCountText.text = $"{collectedObjectCount}/{_levelNeededObjectCount}";
 
         }
     }

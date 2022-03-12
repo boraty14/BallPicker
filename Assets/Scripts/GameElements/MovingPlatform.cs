@@ -41,8 +41,7 @@ namespace GameElements
             yield return new WaitForSeconds(LevelManager.Instance.CurrentLevelEndWaitDuration);
             if (_hitCollectableCount >= LevelManager.Instance.CurrentLevelNeededObject)
             {
-                Debug.Log("win");
-                EventBus.OnLevelWin?.Invoke();
+                MovePlatform();
             }
             else
             {
@@ -50,12 +49,12 @@ namespace GameElements
             }
         }
 
-        public void MovePlatform()
+        private void MovePlatform()
         {
             transform.DOMove(transform.position + Vector3.up * platformSettings.moveHeight,
                 platformSettings.moveDuration).SetEase(platformSettings.moveEase).OnComplete(() =>
             {
-
+                EventBus.OnLevelWin?.Invoke();
             });
         }
 

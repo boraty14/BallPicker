@@ -15,4 +15,10 @@ MonoBehaviour:
   levels:
   - {fileID: 11400000, guid: 679eadc771126f14896b8eec3846b282, type: 2}
   - {fileID: 11400000, guid: 679eadc771126f14896b8eec3846b282, type: 2}
+  colors:
+  - {r: 0.75686276, g: 0.83137256, b: 0.70980394, a: 1}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.8396226, g: 0.7357132, b: 0.06732824, a: 0}
+  - {r: 0.555518, g: 0.104129605, b: 0.5660378, a: 0}
+  - {r: 0.045701336, g: 0.15140624, b: 0.745283, a: 0}
   destroyPreviousLevelDuration: 2

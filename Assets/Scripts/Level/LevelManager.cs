@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Core;
+using Environment;
+using GameElements;
 using GameSettings;
 using UnityEngine;
 using Utils;
@@ -20,9 +22,10 @@ namespace Level
 
         public float CurrentLevelEndWaitDuration => _shuffledLevels[0].endWaitDuration;
 
-        public float CurrentLevelEndPoint => _currentLevelPrefab.GetComponentInChildren<LevelEndTrigger>().transform.position.z;
+        public float CurrentLevelEndPoint =>
+            _currentLevelPrefab.GetComponentInChildren<LevelEndTrigger>().transform.position.z;
 
-        
+
         private void Start()
         {
             CreateLevelList();
@@ -72,12 +75,28 @@ namespace Level
         private IEnumerator LevelChangeRoutine()
         {
             _previousLevelPrefab = _currentLevelPrefab;
+            var levelOffset = GetLevelInstantiateOffset();
             DestroyPreviousLevel();
-            _currentLevelPrefab = Instantiate(_shuffledLevels[0].levelPrefab);
+            _currentLevelPrefab = Instantiate(_shuffledLevels[0].levelPrefab,
+                Vector3.zero + levelOffset * Vector3.forward, Quaternion.identity);
+            SetRandomGroundColor();
             EventBus.OnLevelReset?.Invoke();
             yield break;
         }
-        
+
+        private float GetLevelInstantiateOffset()
+        {
+            if (_previousLevelPrefab == null) return 0f;
+            var movingPlatformParent = _previousLevelPrefab.GetComponentInChildren<MovingPlatform>().transform.parent;
+            return movingPlatformParent.position.z + movingPlatformParent.localScale.z;
+        }
+
+        private void SetRandomGroundColor()
+        {
+            var randomGroundColor = levelManagerSettings.colors[Random.Range(0, levelManagerSettings.colors.Count)];
+            _currentLevelPrefab.GetComponentInChildren<Ground>().SetRandomColor(randomGroundColor);
+        }
+
         private void DestroyPreviousLevel()
         {
             if (_previousLevelPrefab != null)
