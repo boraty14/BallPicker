@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core;
@@ -6,6 +7,7 @@ using GameElements;
 using GameSettings;
 using UnityEngine;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace Level
 {
@@ -24,6 +26,21 @@ namespace Level
 
         public float CurrentLevelEndPoint =>
             _currentLevelPrefab.GetComponentInChildren<LevelEndTrigger>().transform.position.z;
+
+        private void OnEnable()
+        {
+            EventBus.OnTapToPlay += OnTapToPlay;
+        }
+
+        private void OnDisable()
+        {
+            EventBus.OnTapToPlay -= OnTapToPlay;
+        }
+
+        private void OnTapToPlay()
+        {
+            DestroyPreviousLevel();
+        }
 
 
         private void Start()
@@ -76,7 +93,6 @@ namespace Level
         {
             _previousLevelPrefab = _currentLevelPrefab;
             var levelOffset = GetLevelInstantiateOffset();
-            DestroyPreviousLevel();
             _currentLevelPrefab = Instantiate(_shuffledLevels[0].levelPrefab,
                 Vector3.zero + levelOffset * Vector3.forward, Quaternion.identity);
             SetRandomGroundColor();
