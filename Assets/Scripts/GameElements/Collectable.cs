@@ -14,7 +14,7 @@ namespace GameElements
         {
             if (_didHitPlatform) return false;
             _didHitPlatform = true;
-            transform.DOScale(Vector3.zero, collectableSettings.destroyDuration)
+            transform.DOScale(collectableSettings.destroyScale, collectableSettings.destroyDuration)
                 .SetEase(collectableSettings.destroyEase).OnComplete(
                     () =>
                     { 

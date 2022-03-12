@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0eef8da1aad21b4f87f1472247de55f, type: 3}
   m_Name: CubeSettings
   m_EditorClassIdentifier: 
+  destroyScale: 2
   destroyDuration: 1
   destroyEase: 2

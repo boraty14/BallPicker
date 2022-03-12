@@ -6,6 +6,7 @@ namespace GameSettings
     [CreateAssetMenu(menuName = "Game Settings/Create Collectable Settings")]
     public class SCollectableSettings : ScriptableObject
     {
+        public float destroyScale;
         public float destroyDuration;
         public Ease destroyEase;
     }
