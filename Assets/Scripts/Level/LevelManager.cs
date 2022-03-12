@@ -17,6 +17,7 @@ namespace Level
         private List<SLevelSettings> _shuffledLevels = new List<SLevelSettings>();
         private GameObject _previousLevelPrefab;
         private GameObject _currentLevelPrefab;
+        private Color _previousGroundColor = Color.white;
 
         public const string PrefsLevelKey = "Level";
 
@@ -109,8 +110,14 @@ namespace Level
 
         private void SetRandomGroundColor()
         {
-            var randomGroundColor = levelManagerSettings.colors[Random.Range(0, levelManagerSettings.colors.Count)];
+            Color randomGroundColor;
+            while (true)
+            {
+                randomGroundColor = levelManagerSettings.colors[Random.Range(0, levelManagerSettings.colors.Count)];
+                if (randomGroundColor != _previousGroundColor) break;
+            }
             _currentLevelPrefab.GetComponentInChildren<Ground>().SetRandomColor(randomGroundColor);
+            _previousGroundColor = randomGroundColor;
         }
 
         private void DestroyPreviousLevel()
